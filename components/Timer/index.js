@@ -4,11 +4,11 @@ import { actionCreators as tomatoActions } from "../../reducer";
 import Timer from "./presenter";
 
 function mapStateToProps(state){
-    const { isPlaying, elapsedTime, timeDuration} = state;
+    const { isPlaying, elapsedTime, timerDuration} = state;
     return{
         isPlaying,
         elapsedTime,
-        timeDuration
+        timerDuration
     };
 }
 

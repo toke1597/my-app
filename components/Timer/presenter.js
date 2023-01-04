@@ -2,29 +2,26 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import Button from "../Button";
 
-// function formatTime(time){
-//     let minutes = Math.floor(time/60);
-//     time -= minutes * 60;
-//     let seconds = parseInt(time % 60, 10);
-//     return '${minutes < 10 ? '0${minutes}' : minutes} : ${seconds < 10 ? '0${seconds}' : seconds}';
-// }
+function formatTime(time){
+    let minutes = Math.floor(time/60);
+    time -= minutes * 60;
+    let seconds = parseInt(time % 60, 10);
+    return `${minutes < 10 ? `0${minutes}` : minutes} : ${seconds < 10 ? `0${seconds}` : seconds}`;
+}
 
 class Timer extends Component{
-
-componentWillReceiveProps(nextProps){
-    const currentProps = this.props;
-    if(!currentProps.isPlaying && nextProps.isPlaying){
-        //start the interval
-        const timerInterval = setInterval(() => {
-            currentProps.addSecond();
-        }, 1000)
-        this.setState({
-            timerInterval
-        });
-    } else if(currentProps.isPlaying && !nextProps.isPlaying){
-        //stop the interval
-        clearInterval(this.state.timerInterval);
-    }
+    componentWillReceiveProps(nextProps){
+        const currentProps = this.props;
+        if(!currentProps.isPlaying && nextProps.isPlaying){
+            const timerInterval = setInterval(() => {
+                currentProps.addSecond();
+            }, 1000);
+            this.setState({
+                timerInterval
+            });
+        } else if(currentProps.isPlaying && !nextProps.isPlaying){
+            clearInterval(this.state.timerInterval);
+        }
 }
 
     render(){
@@ -32,7 +29,7 @@ componentWillReceiveProps(nextProps){
         const { 
             isPlaying,
             elapsedTime, 
-            timeDuration, 
+            timerDuration, 
             startTimer,
             restartTimer,
             addSecond
@@ -41,7 +38,7 @@ componentWillReceiveProps(nextProps){
             <View style={styles.container}>
                 <StatusBar barStyle={"light-content"}></StatusBar>
                 <View style={styles.upper}>
-                    <Text style={styles.time}>{(timeDuration - elapsedTime)}</Text>
+                    <Text style={styles.time}>{formatTime((timerDuration - elapsedTime))}</Text>
                 </View>
                 <View style={styles.lower}>
                     { !isPlaying && (
